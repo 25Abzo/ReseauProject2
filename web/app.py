@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from api.api import api_bp
-from api.db import create_mailbox_user, authenticate_user
+from api.db import create_mailbox_user, authenticate_user, get_db_connection
 from api.mail import send_email, receive_email
 import os
 from ftplib import FTP
@@ -130,6 +130,97 @@ def upload_file():
             return redirect(url_for('upload_file'))
 
     return render_template('upload_file.html')
+
+
+@app.route('/employees', methods=['GET'])
+def list_employees():
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM employees")
+        employees = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return render_template('employees.html', employees=employees)
+    except Exception as e:
+        flash(f"Error: {str(e)}", 'error')
+        return redirect(url_for('index'))
+    
+
+@app.route('/employees/add', methods=['GET', 'POST'])
+def add_employee():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        position = request.form['position']
+        department = request.form['department']
+
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute(
+                "INSERT INTO employees (name, email, position, department) VALUES (%s, %s, %s, %s)",
+                (name, email, position, department)
+            )
+            conn.commit()
+            cursor.close()
+            conn.close()
+            flash('Employee added successfully', 'success')
+            return redirect(url_for('list_employees'))
+        except Exception as e:
+            flash(f"Error: {str(e)}", 'error')
+
+    return render_template('add_employee.html')
+
+@app.route('/employees/<int:id>/edit', methods=['GET', 'POST'])
+def edit_employee(id):
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        position = request.form['position']
+        department = request.form['department']
+
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute(
+                "UPDATE employees SET name=%s, email=%s, position=%s, department=%s WHERE id=%s",
+                (name, email, position, department, id)
+            )
+            conn.commit()
+            cursor.close()
+            conn.close()
+            flash('Employee updated successfully', 'success')
+            return redirect(url_for('list_employees'))
+        except Exception as e:
+            flash(f"Error: {str(e)}", 'error')
+
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM employees WHERE id=%s", (id,))
+        employee = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        return render_template('edit_employee.html', employee=employee)
+    except Exception as e:
+        flash(f"Error: {str(e)}", 'error')
+        return redirect(url_for('list_employees'))
+
+@app.route('/employees/<int:id>/delete', methods=['POST'])
+def delete_employee(id):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM employees WHERE id=%s", (id,))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        flash('Employee deleted successfully', 'success')
+    except Exception as e:
+        flash(f"Error: {str(e)}", 'error')
+
+    return redirect(url_for('list_employees'))
 
 
 

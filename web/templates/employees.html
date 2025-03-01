@@ -1,0 +1,72 @@
+{% extends "base.html" %} {% block title %}Employees{% endblock %} {% block
+content %}
+<div class="container mx-auto py-10">
+  <h1 class="text-3xl font-bold text-blue-700 mb-6">List of Employees</h1>
+
+  <!-- Bouton Ajouter un Employé -->
+  <a
+    href="{{ url_for('add_employee') }}"
+    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 inline-block"
+  >
+    Add Employee
+  </a>
+
+  {% if employees %}
+  <div class="overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left text-gray-500">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+        <tr>
+          <th scope="col" class="px-6 py-3">ID</th>
+          <th scope="col" class="px-6 py-3">Name</th>
+          <th scope="col" class="px-6 py-3">Email</th>
+          <th scope="col" class="px-6 py-3">Position</th>
+          <th scope="col" class="px-6 py-3">Department</th>
+          <th scope="col" class="px-6 py-3">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for employee in employees %}
+        <tr
+          class="bg-white border-b hover:bg-gray-50 {% if loop.index is even %}bg-gray-50{% endif %}"
+        >
+          <td class="px-6 py-4">{{ employee.id }}</td>
+          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+            {{ employee.name }}
+          </td>
+          <td class="px-6 py-4">{{ employee.email }}</td>
+          <td class="px-6 py-4">{{ employee.position }}</td>
+          <td class="px-6 py-4">{{ employee.department }}</td>
+          <td class="px-6 py-4 flex items-center space-x-2">
+            <!-- Lien pour éditer l'employé -->
+            <a
+              href="{{ url_for('edit_employee', id=employee.id) }}"
+              class="font-medium text-blue-600 hover:underline"
+            >
+              Edit
+            </a>
+
+            <!-- Formulaire pour supprimer l'employé -->
+            <form
+              action="{{ url_for('delete_employee', id=employee.id) }}"
+              method="POST"
+              class="inline-block"
+            >
+              <button
+                type="submit"
+                class="font-medium text-red-600 hover:underline"
+                onclick="return confirm('Are you sure you want to delete this employee?')"
+              >
+                Delete
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="text-gray-600 mt-4">No employees found.</p>
+  {% endif %}
+</div>
+{% endblock %}
