@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Web App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tailwindcss@^3.0"></script>
+</head>
+<body class="bg-gray-50 font-inter">
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 px-8 shadow-lg">
+        <div class="flex justify-between items-center container mx-auto">
+            <h1 class="text-3xl font-bold">My Web App</h1>
+            <nav>
+                <ul class="flex space-x-6 text-lg">
+                    <li><a href="{{ url_for('index') }}" class="hover:underline">Home</a></li>
+                    <li><a href="{{ url_for('login') }}" class="hover:underline">Login</a></li>
+                    <li><a href="{{ url_for('register') }}" class="hover:underline">Register</a></li>
+                    <li><a href="{{ url_for('send_mail') }}" class="hover:underline">Send Mail</a></li>
+                    <li><a href="{{ url_for('receive_mail') }}" class="hover:underline">Receive Mail</a></li>
+                </ul>
+            </nav>
+            {% if 'username' in session %}
+                <div class="flex items-center space-x-4">
+                    <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile" class="w-10 h-10 rounded-full border-2 border-white">
+                    <span class="text-lg font-medium">{{ session['username'] }}</span>
+                    <a href="{{ url_for('logout') }}" class="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-lg">Logout</a>
+                </div>
+            {% endif %}
+        </div>
+    </header>
+
+    <main class="container mx-auto py-8">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="mb-6">
+                    <ul class="space-y-2">
+                        {% for category, message in messages %}
+                            <li class="p-4 rounded-lg bg-{{ 'red-100 text-red-700' if category == 'error' else 'green-100 text-green-700' }}">
+                                {{ message }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400 py-6">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 My Web App. All rights reserved.</p>
+            <p>Follow us on <a href="#" class="text-blue-400 hover:underline">Twitter</a> | <a href="#" class="text-blue-400 hover:underline">Facebook</a></p>
+        </div>
+    </footer>
+</body>
+</html>

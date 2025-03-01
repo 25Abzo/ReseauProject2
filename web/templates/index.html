@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto py-10">
+    <div class="text-center mb-12">
+        <h1 class="text-5xl font-extrabold text-blue-700">Welcome to My Web App</h1>
+        <p class="text-lg text-gray-600 mt-4">Your all-in-one solution for communication and productivity.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-white shadow-lg rounded-lg p-6 hover:shadow-2xl transition-transform transform hover:-translate-y-2 duration-300">
+            <h2 class="text-2xl font-semibold text-blue-600 mb-4">Register</h2>
+            <p class="text-gray-600 mb-6">Sign up to unlock all features and start your journey.</p>
+            <a href="{{ url_for('register') }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full">Get Started</a>
+        </div>
+
+        <div class="bg-white shadow-lg rounded-lg p-6 hover:shadow-2xl transition-transform transform hover:-translate-y-2 duration-300">
+            <h2 class="text-2xl font-semibold text-blue-600 mb-4">Send Mail</h2>
+            <p class="text-gray-600 mb-6">Easily compose and send messages to anyone.</p>
+            <a href="{{ url_for('send_mail') }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full">Send Now</a>
+        </div>
+
+        <div class="bg-white shadow-lg rounded-lg p-6 hover:shadow-2xl transition-transform transform hover:-translate-y-2 duration-300">
+            <h2 class="text-2xl font-semibold text-blue-600 mb-4">Receive Mail</h2>
+            <p class="text-gray-600 mb-6">Access your inbox and manage your conversations.</p>
+            <a href="{{ url_for('receive_mail') }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full">Check Inbox</a>
+        </div>
+        <div class="bg-white shadow-lg rounded-lg p-6 hover:shadow-2xl transition-transform transform hover:-translate-y-2 duration-300">
+            <h2 class="text-2xl font-semibold text-blue-600 mb-4">Upload file</h2>
+            <p class="text-gray-600 mb-6">Upload any file and save them on the server.</p>
+            <a href="{{ url_for('upload_file') }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full">Check Inbox</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

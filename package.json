@@ -1,0 +1,19 @@
+{
+  "name": "my_project",
+  "version": "1.0.0",
+  "main": "tailwind.config.js",
+"scripts": {
+  "build:css": "npx tailwindcss build web/static/css/styles.css -o web/static/css/output.css",
+  "watch:css": "npx tailwindcss -i web/static/css/styles.css -o web/static/css/output.css --watch",
+  "start:dev": "honcho start",
+  "start:flask": "python app.py",
+  "test": "echo \"No tests configured yet.\""
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "tailwindcss": "^3.0.0"
+  }
+}

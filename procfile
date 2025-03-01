@@ -1,0 +1,2 @@
+web: python3 run.py
+css: npx tailwindcss -i web/static/css/styles.css -o web/static/css/output.css --watch
