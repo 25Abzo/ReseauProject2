@@ -35,11 +35,11 @@ pip install -r requirements.txt
 ## ⚙️ Configuration
 Crée un fichier `.env` à la racine du projet et ajoute les paramètres suivants :
 ```ini
-EMAIL_HOST=smtp.example.com
+EMAIL_HOST=name.smarttech.sn
 EMAIL_PORT=587
 EMAIL_USE_TLS=True
-EMAIL_HOST_USER=tonemail@example.com
-EMAIL_HOST_PASSWORD=motdepasse
+EMAIL_HOST_USER=tonemail@smarttech.sn
+EMAIL_HOST_PASSWORD=(A fournir !)
 ```
 
 ## ▶️ Utilisation
