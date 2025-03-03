@@ -1,9 +1,12 @@
 {% extends "base.html" %} {% block content %}
 <div class="container mx-auto py-10">
   <div class="text-center mb-12">
-    <h1 class="text-5xl font-extrabold text-blue-700">Welcome to My Web App</h1>
+    <h1 class="text-5xl font-extrabold text-indigo-700">
+      Welcome to SmartTech Dashboard
+    </h1>
     <p class="text-lg text-gray-600 mt-4">
-      Your all-in-one solution for communication and productivity.
+      A comprehensive solution for communication, productivity, and employee
+      management.
     </p>
   </div>
 
@@ -12,15 +15,17 @@
     <div
       class="bg-white shadow-lg rounded-lg p-6 hover:shadow-2xl transition-transform transform hover:-translate-y-2 duration-300"
     >
-      <h2 class="text-2xl font-semibold text-blue-600 mb-4">Register</h2>
+      <h2 class="text-2xl font-semibold text-indigo-600 mb-4">Register</h2>
       <p class="text-gray-600 mb-6">
-        Sign up to unlock all features and start your journey.
+        Create an account to access all features and start managing your
+        resources.
       </p>
       <a
         href="{{ url_for('register') }}"
-        class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full"
-        >Get Started</a
+        class="inline-block bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-6 rounded-full transition duration-300"
       >
+        Get Started
+      </a>
     </div>
 
     <!-- Send Mail -->
@@ -29,60 +34,64 @@
     >
       <h2 class="text-2xl font-semibold text-blue-600 mb-4">Send Mail</h2>
       <p class="text-gray-600 mb-6">
-        Easily compose and send messages to anyone.
+        Compose and send professional emails directly from the dashboard.
       </p>
       <a
         href="{{ url_for('send_mail') }}"
-        class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full"
-        >Send Now</a
+        class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full transition duration-300"
       >
+        Send Now
+      </a>
     </div>
 
     <!-- Receive Mail -->
     <div
       class="bg-white shadow-lg rounded-lg p-6 hover:shadow-2xl transition-transform transform hover:-translate-y-2 duration-300"
     >
-      <h2 class="text-2xl font-semibold text-blue-600 mb-4">Receive Mail</h2>
+      <h2 class="text-2xl font-semibold text-green-600 mb-4">Inbox</h2>
       <p class="text-gray-600 mb-6">
-        Access your inbox and manage your conversations.
+        Access your inbox and manage incoming messages efficiently.
       </p>
       <a
         href="{{ url_for('receive_mail') }}"
-        class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full"
-        >Check Inbox</a
+        class="inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full transition duration-300"
       >
+        Check Inbox
+      </a>
     </div>
 
     <!-- Upload File -->
     <div
       class="bg-white shadow-lg rounded-lg p-6 hover:shadow-2xl transition-transform transform hover:-translate-y-2 duration-300"
     >
-      <h2 class="text-2xl font-semibold text-blue-600 mb-4">Upload File</h2>
+      <h2 class="text-2xl font-semibold text-purple-600 mb-4">Upload Files</h2>
       <p class="text-gray-600 mb-6">
-        Upload any file and save it on the server.
+        Store and share files securely on our cloud-based platform.
       </p>
       <a
         href="{{ url_for('upload_file') }}"
-        class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full"
-        >Upload File</a
+        class="inline-block bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-6 rounded-full transition duration-300"
       >
+        Upload File
+      </a>
     </div>
 
     <!-- Manage Employees -->
     <div
       class="bg-white shadow-lg rounded-lg p-6 hover:shadow-2xl transition-transform transform hover:-translate-y-2 duration-300"
     >
-      <h2 class="text-2xl font-semibold text-blue-600 mb-4">
-        Manage Employees
+      <h2 class="text-2xl font-semibold text-orange-600 mb-4">
+        Employee Management
       </h2>
       <p class="text-gray-600 mb-6">
-        Add, edit, or delete employees from the system.
+        Add, edit, or delete employees and streamline your HR processes.
       </p>
       <a
         href="{{ url_for('list_employees') }}"
-        class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full"
-        >Manage Now</a
+        class="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-full transition duration-300"
       >
+        Manage Employees
+      </a>
     </div>
   </div>
 </div>

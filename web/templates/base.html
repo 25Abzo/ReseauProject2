@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Web App</title>
+    <title>{% block title %}SmartTech Dashboard{% endblock %}</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/output.css') }}"
@@ -16,37 +16,39 @@
   </head>
   <body class="bg-gray-50 font-inter">
     <header
-      class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 px-8 shadow-lg"
+      class="bg-gradient-to-r from-blue-800 to-indigo-900 text-white py-4 px-8 shadow-lg"
     >
       <div class="flex justify-between items-center container mx-auto">
-        <h1 class="text-3xl font-bold">My Web App</h1>
-        <nav>
-          <ul class="flex space-x-6 text-lg">
-            <li>
-              <a href="{{ url_for('index') }}" class="hover:underline">Home</a>
-            </li>
-            <li>
-              <a href="{{ url_for('login') }}" class="hover:underline">Login</a>
-            </li>
-            <li>
-              <a href="{{ url_for('register') }}" class="hover:underline"
-                >Register</a
-              >
-            </li>
-            <li>
-              <a href="{{ url_for('send_mail') }}" class="hover:underline"
-                >Send Mail</a
-              >
-            </li>
-            <li>
-              <a href="{{ url_for('receive_mail') }}" class="hover:underline"
-                >Receive Mail</a
-              >
-            </li>
-          </ul>
-        </nav>
-        {% if 'username' in session %}
+        <!-- Logo et Titre -->
         <div class="flex items-center space-x-4">
+          <img
+            src="{{ url_for('static', filename='images/Smarttech.png') }}"
+            alt="SmartTech Logo"
+            class="w-12 h-12 rounded-md"
+          />
+          <h1 class="text-3xl font-bold">SmartTech Dashboard</h1>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="hidden md:flex space-x-6 text-lg">
+          <a href="{{ url_for('index') }}" class="hover:underline">Dashboard</a>
+          <a href="{{ url_for('list_employees') }}" class="hover:underline"
+            >Employees</a
+          >
+          <a href="{{ url_for('send_mail') }}" class="hover:underline"
+            >Send Mail</a
+          >
+          <a href="{{ url_for('receive_mail') }}" class="hover:underline"
+            >Inbox</a
+          >
+          <a href="{{ url_for('upload_file') }}" class="hover:underline"
+            >Upload Files</a
+          >
+        </nav>
+
+        <!-- Authentification -->
+        <div class="flex items-center space-x-4">
+          {% if 'username' in session %}
           <img
             src="{{ url_for('static', filename='images/profile.png') }}"
             alt="Profile"
@@ -55,15 +57,30 @@
           <span class="text-lg font-medium">{{ session['username'] }}</span>
           <a
             href="{{ url_for('logout') }}"
-            class="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-lg"
-            >Logout</a
+            class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg transition duration-300"
           >
+            Logout
+          </a>
+          {% else %}
+          <a
+            href="{{ url_for('login') }}"
+            class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition duration-300"
+          >
+            Login
+          </a>
+          <a
+            href="{{ url_for('register') }}"
+            class="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-lg transition duration-300"
+          >
+            Register
+          </a>
+          {% endif %}
         </div>
-        {% endif %}
       </div>
     </header>
 
     <main class="container mx-auto py-8">
+      <!-- Flash Messages -->
       {% with messages = get_flashed_messages(with_categories=true) %} {% if
       messages %}
       <div class="mb-6">
@@ -77,16 +94,21 @@
           {% endfor %}
         </ul>
       </div>
-      {% endif %} {% endwith %} {% block content %}{% endblock %}
+      {% endif %} {% endwith %}
+
+      <!-- Contenu Principal -->
+      {% block content %}{% endblock %}
     </main>
 
-    <footer class="bg-gray-800 text-gray-400 py-6">
+    <footer class="bg-gray-800 text-gray-300 py-6">
       <div class="container mx-auto text-center">
-        <p>&copy; 2025 My Web App. All rights reserved.</p>
-        <p>
+        <p class="text-sm">
+          &copy; 2025 SmartTech Solutions. All rights reserved.
+        </p>
+        <p class="mt-2 text-sm">
           Follow us on
           <a href="#" class="text-blue-400 hover:underline">Twitter</a> |
-          <a href="#" class="text-blue-400 hover:underline">Facebook</a>
+          <a href="#" class="text-blue-400 hover:underline">LinkedIn</a>
         </p>
       </div>
     </footer>

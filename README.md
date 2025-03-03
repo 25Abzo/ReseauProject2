@@ -4,7 +4,7 @@
 Cette application web permet la gestion des employés, clients, documents, et emails pour l'entreprise SmartTech.
 
 ## Installation
-1. Clonez le repository : `git clone https://github.com/<votre_nom_utilisateur>/smarttech-dashboard.git`
+1. Clonez le repository : `git clone https://github.com/25Abzo/ReseauProject2.git`
 2. Installez les dépendances : `pip install -r requirements.txt`
 3. Configurez la base de données MySQL :
    - Créez une base de données nommée `smarttech_db`.
