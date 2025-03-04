@@ -26,7 +26,7 @@ Configuration Requise :
 Installez vsftpd et configurez /etc/vsftpd.conf.
 ### 4. Services Réseau
 DNS (BIND) : Configurez le nom de domaine interne smarttech.sn pour accéder à l'application.
-SSH : Connectez-vous aux machines Linux via SSH (port personnalisé : 2222).
+SSH : Connectez-vous aux machines Linux via SSH (port personnalisé : 22).
 VNC/NoVNC : Accédez graphiquement aux machines Linux.
 RDP : Accédez graphiquement aux machines Windows.
 
