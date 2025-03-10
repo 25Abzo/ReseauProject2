@@ -1,0 +1,53 @@
+{% extends "base.html" %} {% block title %}Clients List{% endblock %} {% block
+content %}
+<h1 class="text-3xl font-bold mb-6">List of Clients</h1>
+<a
+  href="{{ url_for('add_client') }}"
+  class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mb-4"
+  >Add Client</a
+>
+
+<table class="table-auto w-full border">
+  <thead>
+    <tr>
+      <th class="border p-2">ID</th>
+      <th class="border p-2">Name</th>
+      <th class="border p-2">Email</th>
+      <th class="border p-2">Company</th>
+      <th class="border p-2">Contact Number</th>
+      <th class="border p-2">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for client in clients %}
+    <tr>
+      <td class="border p-2">{{ client.id }}</td>
+      <td class="border p-2">{{ client.name }}</td>
+      <td class="border p-2">{{ client.email }}</td>
+      <td class="border p-2">{{ client.company }}</td>
+      <td class="border p-2">{{ client.contact_number }}</td>
+      <td class="border p-2">
+        <a
+          href="{{ url_for('edit_client', id=client.id) }}"
+          class="text-blue-500 mr-2"
+          >Edit</a
+        >
+        <form
+          action="{{ url_for('delete_client', id=client.id) }}"
+          method="POST"
+          style="display: inline"
+        >
+          <button
+            type="submit"
+            class="text-red-500"
+            onclick="return confirm('Are you sure?')"
+          >
+            Delete
+          </button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

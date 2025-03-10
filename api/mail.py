@@ -3,6 +3,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import imaplib
 import email
+from email.header import decode_header
 
 def send_email(my_email, password, email_destinataire, subject, body):
     message = MIMEMultipart()
@@ -24,6 +25,9 @@ def send_email(my_email, password, email_destinataire, subject, body):
         print(f"Erreur SMTP : {e}")
     except Exception as e:
         print(f"Erreur inattendue : {e}")
+
+
+
 
 def receive_email(imap_server, imap_port, email_user, email_password):
     try:

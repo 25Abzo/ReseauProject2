@@ -35,13 +35,21 @@
           <a href="{{ url_for('list_employees') }}" class="hover:underline"
             >Employees</a
           >
-          <a href="{{ url_for('send_mail') }}" class="hover:underline"
-            >Send Mail</a
+          <a href="{{ url_for('list_clients') }}" class="hover:underline"
+            >Clients</a
           >
+          <!-- Nouveau lien pour Clients -->
+          <a href="{{ url_for('list_documents') }}" class="hover:underline"
+            >Documents</a
+          >
+          <a href="{{ url_for('list_uploads') }}" class="hover:underline"
+            >Fichiers Uploadés</a
+          >
+
           <a href="{{ url_for('receive_mail') }}" class="hover:underline"
             >Inbox</a
           >
-          <a href="{{ url_for('upload_file') }}" class="hover:underline"
+          <a href="{{ url_for('upload_file1') }}" class="hover:underline"
             >Upload Files</a
           >
         </nav>
@@ -50,7 +58,7 @@
         <div class="flex items-center space-x-4">
           {% if 'username' in session %}
           <img
-            src="{{ url_for('static', filename='images/profile.png') }}"
+            src="{{ url_for('static', filename='images/user.jpeg') }}"
             alt="Profile"
             class="w-10 h-10 rounded-full border-2 border-white"
           />
@@ -80,7 +88,7 @@
     </header>
 
     <main class="container mx-auto py-8">
-      <!-- Flash Messages -->
+      <!-- Messages Flash -->
       {% with messages = get_flashed_messages(with_categories=true) %} {% if
       messages %}
       <div class="mb-6">

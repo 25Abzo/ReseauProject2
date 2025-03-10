@@ -1,0 +1,51 @@
+{% extends "base.html" %} {% block title %}Documents List{% endblock %} {% block
+content %}
+<h1 class="text-3xl font-bold mb-6">List of Uploaded Documents</h1>
+<a
+  href="{{ url_for('upload_file1') }}"
+  class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mb-4"
+  >Upload Document</a
+>
+
+<table class="table-auto w-full border">
+  <thead>
+    <tr>
+      <th class="border p-2">ID</th>
+      <th class="border p-2">Title</th>
+      <th class="border p-2">Uploaded By</th>
+      <th class="border p-2">Upload Date</th>
+      <th class="border p-2">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for document in documents %}
+    <tr>
+      <td class="border p-2">{{ document.id }}</td>
+      <td class="border p-2">{{ document.title }}</td>
+      <td class="border p-2">{{ document.uploaded_by }}</td>
+      <td class="border p-2">{{ document.upload_date }}</td>
+      <td class="border p-2">
+        <a
+          href="{{ url_for('download_file', filename=file) }}"
+          class="text-green-500 mr-2"
+          >Download</a
+        >
+        <form
+          action="{{ url_for('delete_document', id=document.id) }}"
+          method="POST"
+          style="display: inline"
+        >
+          <button
+            type="submit"
+            class="text-red-500"
+            onclick="return confirm('Are you sure?')"
+          >
+            Delete
+          </button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

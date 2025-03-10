@@ -93,6 +93,37 @@
         Manage Employees
       </a>
     </div>
+
+    <!-- Section Clients -->
+    <div
+      class="bg-white shadow-lg rounded-lg p-6 hover:shadow-2xl transition-transform transform hover:-translate-y-2 duration-300"
+    >
+      <h2 class="text-2xl font-semibold text-orange-600 mb-4">
+        Clients Management
+      </h2>
+      <p class="text-gray-600 mb-6">Manage client information.</p>
+      <a
+        href="{{ url_for('list_clients') }}"
+        class="inline-block bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-full transition duration-300"
+      >
+        Manage Clients
+      </a>
+    </div>
+    <!-- Section Documents -->
+    <div
+      class="bg-white shadow-lg rounded-lg p-6 hover:shadow-2xl transition-transform transform hover:-translate-y-2 duration-300"
+    >
+      <h2 class="text-2xl font-semibold text-orange-600 mb-4">
+        Documents Management
+      </h2>
+      <p class="text-gray-600 mb-6">Upload, download, or delete documents.</p>
+      <a
+        href="{{ url_for('list_documents') }}"
+        class="inline-block bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-6 rounded-full transition duration-300"
+      >
+        Documents
+      </a>
+    </div>
   </div>
 </div>
 {% endblock %}

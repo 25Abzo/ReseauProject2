@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block title %}Upload File{% endblock %} {% block
+content %}
+<h1 class="text-3xl font-bold mb-6">Upload File</h1>
+<form
+  method="POST"
+  enctype="multipart/form-data"
+  class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg"
+>
+  <div class="mb-4">
+    <label for="title" class="block font-medium text-gray-700">Title:</label>
+    <input
+      type="text"
+      id="title"
+      name="title"
+      class="w-full border rounded p-2 mt-1"
+      required
+    />
+  </div>
+  <div class="mb-4">
+    <label for="file" class="block font-medium text-gray-700">File:</label>
+    <input
+      type="file"
+      id="file"
+      name="file"
+      class="w-full border rounded p-2 mt-1"
+      required
+    />
+  </div>
+  <button
+    type="submit"
+    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+  >
+    Upload File
+  </button>
+</form>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends "base.html" %} {% block title %}Liste des Fichiers Téléversés{%
+endblock %} {% block content %}
+<div class="container mx-auto py-8">
+  <h1 class="text-4xl font-extrabold text-blue-800 mb-8">
+    Fichiers Disponibles
+  </h1>
+
+  {% if files %}
+  <div class="grid gap-6 mb-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    {% for file in files %}
+    <div
+      class="bg-white rounded-lg border border-gray-200 shadow-md p-4 hover:shadow-lg transition duration-200"
+    >
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="text-lg font-semibold text-gray-800">{{ file.name }}</h2>
+          <div class="flex items-center text-sm text-gray-500 gap-2">
+            <!-- Icône de fichier -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M14 10V3M14 10V3"
+              />
+            </svg>
+            <span>{{ file.size }}</span>
+            <!-- Icône d'horloge -->
+            <span class="ml-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7M8 7"
+                />
+              </svg>
+              {{ file.last_modified }}
+            </span>
+          </div>
+        </div>
+        <!-- Icône selon l'extension -->
+        <img
+          src="{{ url_for('static', filename='images/file-icons/' + 
+            (file.name.split('.')[-1].lower() if file.name.split('.')[-1].lower() in ['pdf', 'jpg', 'png', 'doc', 'docx'] else 'default') + '.svg') }}"
+          alt="Icone {{ file.name }}"
+          class="w-8 h-8"
+        />
+      </div>
+
+      <div class="flex items-center justify-between">
+        <a
+          href="{{ url_for('download_file', filename=file.name) }}"
+          class="bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-700 transition duration-200"
+        >
+          Télécharger
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="flex items-center justify-center h-96">
+    <div class="text-center">
+      <img
+        src="{{ url_for('static', filename='images/empty-state.png') }}"
+        alt="Aucun fichier"
+        class="w-32 h-32 mb-4"
+      />
+      <h3 class="text-2xl font-semibold text-gray-700">Aucun fichier trouvé</h3>
+      <p class="text-gray-500">
+        Cliquez sur "Téléverser" pour ajouter des documents.
+      </p>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Bouton de Téléversement -->
+  <div class="flex justify-end mt-6">
+    <a
+      href="{{ url_for('upload_file') }}"
+      class="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition duration-200"
+    >
+      Téléverser un nouveau fichier
+    </a>
+  </div>
+</div>
+{% endblock %}
