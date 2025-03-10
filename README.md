@@ -35,7 +35,6 @@ Interface Web : Permet de téléverser des fichiers via l'URL /upload_file.
 Serveur FTP :
 📂 Configuré avec vsftpd (fichier vsftpd.conf inclus).
 ### 4. Services Réseau
-<<<<<<< HEAD
 DNS (BIND) :
 🌐 Nom de domaine smarttech.sn résout vers l'IP du serveur (fichier db.smarttech.sn).
 SSH (OpenSSH) :
@@ -44,18 +43,10 @@ VNC/NoVNC :
 🖥️ Accès graphique aux machines Linux via http://@serveur:8080/vnc.html.
 RDP (xRDP) :
 🖥️ Accès graphique aux machines Windows sur le port 3389.
-=======
 DNS (BIND) : Configurez le nom de domaine interne smarttech.sn pour accéder à l'application.
 SSH : Connectez-vous aux machines Linux via SSH (port personnalisé : 22).
 VNC/NoVNC : Accédez graphiquement aux machines Linux.
 RDP : Accédez graphiquement aux machines Windows.
-
-
-
-
-
-
->>>>>>> 7abefeecd7ee89e46b05015bc76b94358b412405
 
 ## 🧪 Tests Réalisés
 Scénario Global Validé
