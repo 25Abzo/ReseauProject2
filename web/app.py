@@ -18,6 +18,20 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 
+from functools import wraps
+from flask import redirect, url_for, session, flash
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'username' not in session:  # Vérifie si l'utilisateur est connecté
+            flash('Veuillez vous connecter pour accéder à cette page.', 'error')
+            return redirect(url_for('login'))  # Redirige vers la page de connexion
+        return f(*args, **kwargs)  # Exécute la fonction originale
+    return decorated_function
+
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -71,6 +85,7 @@ def login():
 
 
 @app.route('/send_mail', methods=['GET', 'POST'])
+@login_required
 def send_mail():
     # if 'username' not in session or 'password' not in session:
     #     return redirect(url_for('login'))
@@ -96,6 +111,7 @@ def send_mail():
 
 
 @app.route('/receive_mail', methods=['GET', 'POST'])
+@login_required
 def receive_mail():
     if 'username' not in session or 'password' not in session:
         return redirect(url_for('login'))
@@ -135,6 +151,7 @@ def receive_mail():
 
 
 @app.route('/upload_file', methods=['GET', 'POST'])
+@login_required
 def upload_file():
     if request.method == 'POST':
         if 'file' not in request.files:
@@ -159,6 +176,7 @@ def upload_file():
 
 
 @app.route('/list_uploads', methods=['GET'])
+@login_required
 def list_uploads():
     upload_dir = app.config['UPLOAD_FOLDER']
     try:
@@ -213,6 +231,7 @@ app.jinja_env.globals.update(
 )
 
 @app.route('/employees', methods=['GET'])
+@login_required
 def list_employees():
     try:
         conn = get_db_connection()
@@ -228,6 +247,7 @@ def list_employees():
 
 
 @app.route('/employees/add', methods=['GET', 'POST'])
+@login_required
 def add_employee():
     if request.method == 'POST':
         name = request.form['name']
@@ -339,6 +359,7 @@ def delete_employee(id):
 
 
 @app.route('/clients', methods=['GET'])
+@login_required
 def list_clients():
     try:
         conn = get_db_connection()
@@ -353,6 +374,7 @@ def list_clients():
         return redirect(url_for('index'))
 
 @app.route('/clients/add', methods=['GET', 'POST'])
+@login_required
 def add_client():
     if request.method == 'POST':
         name = request.form['name']
@@ -443,6 +465,7 @@ def delete_client(id):
 
 
 @app.route('/upload_file1', methods=['GET', 'POST'])
+@login_required
 
 def upload_file1():
     if request.method == 'POST':
@@ -481,6 +504,7 @@ def upload_file1():
     return render_template('upload_file1.html')
 
 @app.route('/documents', methods=['GET'])
+@login_required
 
 def list_documents():
     try:
