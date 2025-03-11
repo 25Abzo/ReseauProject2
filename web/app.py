@@ -4,13 +4,15 @@ from api.mail import send_email, receive_email
 import os
 from werkzeug.utils import secure_filename
 from datetime import datetime
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = 'b9d025c1f7e0d1f8b24c33970804617d'
- 
-
-app.config['UPLOAD_FOLDER'] = '/home/abzo/upload'
+app.secret_key = os.getenv('SECRET_KEY') 
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')  
+app.config['UPLOAD_FOLDER'] = os.getenv('FTP_BASE_PATH', '/home/abzo/upload')  
 app.config['ALLOWED_EXTENSIONS'] = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 
@@ -24,10 +26,10 @@ from flask import redirect, url_for, session, flash
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'username' not in session:  # Vérifie si l'utilisateur est connecté
+        if 'username' not in session:  
             flash('Veuillez vous connecter pour accéder à cette page.', 'error')
-            return redirect(url_for('login'))  # Redirige vers la page de connexion
-        return f(*args, **kwargs)  # Exécute la fonction originale
+            return redirect(url_for('login'))  
+        return f(*args, **kwargs)  
     return decorated_function
 
 
@@ -53,8 +55,10 @@ def register():
         try:
             add_employee_to_database(name, email, password, "New Employee", "Not Assigned", int(quota))
 
-            send_email("pablo@smarttech.sn", "#Pablo15", email, "Welcome to SmartTech", 
-                       f"Hello {name}, your account has been created successfully.")
+            admin_email = os.getenv('SMTP_SENDER')
+            admin_password = os.getenv('SMTP_PASSWORD')
+            send_email(admin_email, admin_password, email, "Bienvenue chez SmartTech", 
+                       f"Bonjour {name},\n\nVotre compte a été créé avec succès.")
 
             flash('User registered successfully', 'success')
             return redirect(url_for('login'))
@@ -87,8 +91,6 @@ def login():
 @app.route('/send_mail', methods=['GET', 'POST'])
 @login_required
 def send_mail():
-    # if 'username' not in session or 'password' not in session:
-    #     return redirect(url_for('login'))
 
     if request.method == 'POST':
         username = session['username']
@@ -125,7 +127,7 @@ def receive_mail():
         emails = receive_email(imap_server, imap_port, email_user, email_password)
         return render_template('receive_mail.html', emails=emails)
 
-    # Récupérer automatiquement les emails lors de l'accès à la page
+
     email_user = session['username']
     email_password = session['password']  
     imap_server = 'mail.smarttech.sn'  
@@ -134,20 +136,6 @@ def receive_mail():
     emails = receive_email(imap_server, imap_port, email_user, email_password)
     return render_template('receive_mail.html', emails=emails)
 
-    # # Méthode GET
-    # email_user = session['username']
-    # email_password = session['password']
-    # imap_server = 'mail.smarttech.sn'
-    # imap_port = 993
-
-    # try:
-    #     emails = receive_email(imap_server, imap_port, email_user, email_password)
-    #     if not emails:
-    #         flash('Aucun email trouvé.', 'info')
-    #     return render_template('receive_mail.html', emails=emails)
-    # except Exception as e:
-    #     flash(f"Erreur : {str(e)}", 'error')
-    #     return render_template('receive_mail.html', emails=[])
 
 
 @app.route('/upload_file', methods=['GET', 'POST'])
@@ -264,10 +252,11 @@ def add_employee():
             
             add_employee_to_database(name, email, "default_password", position, department, int(quota))
 
-            
+            admin_email = os.getenv('SMTP_SENDER')
+            admin_password = os.getenv('SMTP_PASSWORD')
             send_email(
-                my_email="pablo@smarttech.sn", 
-                password="#Pablo15",    
+                admin_email, 
+                admin_password,    
                 email_destinataire=email,             
                 subject="Welcome to SmartTech", 
                 body=f"Hello {name},\n\nYour account has been created successfully.\nPosition: {position}\nDepartment: {department}\nQuota: {quota} MB"
@@ -300,8 +289,9 @@ def edit_employee(id):
             
             update_employee_in_database(email, name, position, department, int(quota))
 
-            
-            send_email("admin@smarttech.sn", "your_password", email, "Account Updated", f"Hello {name}, your account has been updated successfully.")
+            admin_email = os.getenv('SMTP_SENDER')
+            admin_password = os.getenv('SMTP_PASSWORD')
+            send_email(admin_email, admin_password, email, "Account Updated", f"Hello {name}, your account has been updated successfully.")
 
             flash('Employee updated successfully', 'success')
             return redirect(url_for('list_employees'))
@@ -348,8 +338,9 @@ def delete_employee(id):
         
         delete_employee_from_database(email)
 
-        
-        send_email("admin@smarttech.sn", "your_password", email, "Account Deleted", f"Hello {name}, your account has been deleted from the system.")
+        admin_email = os.getenv('SMTP_SENDER')
+        admin_password = os.getenv('SMTP_PASSWORD')
+        send_email(admin_email, admin_password, email, "Account Deleted", f"Hello {name}, your account has been deleted from the system.")
 
         flash('Employee deleted successfully', 'success')
     except Exception as e:
